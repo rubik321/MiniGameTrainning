@@ -30,6 +30,8 @@ public class DataController : MonoBehaviour
     public TextMeshProUGUI tongSoTienNguoiChoiCoTxt;
     public int tongTien = 100000;
     public int tongCuoc = 0;
+
+    public int TienThang = 0;
     public TextMeshProUGUI tongSoTienCuocTxt;
 
     public int TienCuoc;
@@ -56,13 +58,25 @@ public class DataController : MonoBehaviour
             Debug.Log(cua);
             if (cua.TienCuoc > 0)
             {
-                tongTien += cua.TienCuoc;
+                cua.TienThang += cua.TienCuoc;
             }
             this.computerUi.iconEnimal[i].sprite = lsSpriteIcon[(int)cua.Type].EnimalImg;
         }
-        
-        
-        //
+
+        for (int j = 0; j < this.Cuas.Count; j++)
+        {
+            if (this.Cuas[j].TienThang > 0)
+            {
+                tongTien += Cuas[j].TienThang;
+                tongTien += Cuas[j].TienCuoc;
+            }
+
+            Cuas[j].ResetCuoc();
+
+        }
+
+
+        tongCuoc = 0;
         this.UpdateText();
     }
 
@@ -72,9 +86,14 @@ public class DataController : MonoBehaviour
 
     }
 
+    public void UpdateCuoc()
+    {
+
+    }
     public void UpdateText()
     {
-        tongSoTienNguoiChoiCoTxt.text = this.tongTien - tongCuoc + "";
+
+        tongSoTienNguoiChoiCoTxt.text = this.tongTien.ToString();
         tongSoTienCuocTxt.text = tongCuoc + "";
     }
 

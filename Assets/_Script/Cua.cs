@@ -20,6 +20,7 @@ public class Cua : MonoBehaviour
     public DataController dataController;
     public TypeCua Type;
     public int TienCuoc;
+    public int TienThang;
     public TextMeshProUGUI TienUI;
     public GameController gameController;
     private void Start()
@@ -48,9 +49,10 @@ public class Cua : MonoBehaviour
     public void ResetCuoc()
     {
         TienCuoc = 0;
+        TienThang = 0;
         this.TienUI.text = this.TienCuoc.ToString();
-        dataController.tongSoTienNguoiChoiCoTxt.text = dataController.ToString();
-        dataController.tongSoTienCuocTxt.text = dataController.tongCuoc.ToString();
+        // dataController.tongSoTienNguoiChoiCoTxt.text = dataController.ToString();
+        // dataController.tongSoTienCuocTxt.text = dataController.tongCuoc.ToString();
 
     }
 
@@ -61,10 +63,11 @@ public class Cua : MonoBehaviour
         {
             this.TienCuoc += dataController.TienCuoc;
             this.TienUI.text = this.TienCuoc.ToString();
-            int tongTienConLai = dataController.tongTien - TienCuoc;
+            //int tongTienConLai = dataController.tongTien - TienCuoc;
 
 
             dataController.tongCuoc += dataController.TienCuoc;
+            dataController.tongTien -= dataController.TienCuoc;
 
             dataController.UpdateText();
         }
