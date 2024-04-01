@@ -32,6 +32,8 @@ public class DataController : MonoBehaviour
     public int tongCuoc = 0;
 
     public int TienThang = 0;
+
+
     public TextMeshProUGUI tongSoTienCuocTxt;
 
     public int TienCuoc;
@@ -70,6 +72,10 @@ public class DataController : MonoBehaviour
                 tongTien += Cuas[j].TienThang;
                 tongTien += Cuas[j].TienCuoc;
             }
+            // for (this.Cuas[i] = TienThang > 0)
+            // {
+            //     tongTien += Cuas[i].TienThang;
+            // }
 
             Cuas[j].ResetCuoc();
 

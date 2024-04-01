@@ -21,6 +21,8 @@ public class Cua : MonoBehaviour
     public TypeCua Type;
     public int TienCuoc;
     public int TienThang;
+    public TextMeshProUGUI TienThangtxt;
+
     public TextMeshProUGUI TienUI;
     public GameController gameController;
     private void Start()
