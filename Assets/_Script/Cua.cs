@@ -14,10 +14,19 @@ public enum TypeCua
     Ca
 }
 
+public enum TypeKetQuaThangThua
+{
+    Thang = 0,
+    Thua = 1,
+}
+
+
 [System.Serializable]
 public class Cua : MonoBehaviour
 {
     public DataController dataController;
+
+    public TypeKetQuaThangThua TypeKetQuaThangThua;
     public TypeCua Type;
     public int TienCuoc;
     public int TienThang;
@@ -25,6 +34,9 @@ public class Cua : MonoBehaviour
 
     public TextMeshProUGUI TienUI;
     public GameController gameController;
+    public bool isWin;
+
+
     private void Start()
     {
         dataController = DataController.instance;
@@ -38,10 +50,11 @@ public class Cua : MonoBehaviour
             {
                 TienCuoc -= dataController.TienCuoc;
                 dataController.tongCuoc -= dataController.TienCuoc;
-
+                dataController.tongTien += dataController.TienCuoc;
                 this.TienUI.text = checkTienCuoc.ToString();
                 dataController.tongSoTienCuocTxt.text = dataController.tongCuoc.ToString();
                 dataController.UpdateText();
+
             }
 
 
@@ -53,6 +66,10 @@ public class Cua : MonoBehaviour
         TienCuoc = 0;
         TienThang = 0;
         this.TienUI.text = this.TienCuoc.ToString();
+        isWin = false;
+
+
+        // TienThangtxt.gameObject.SetActive(false);
         // dataController.tongSoTienNguoiChoiCoTxt.text = dataController.ToString();
         // dataController.tongSoTienCuocTxt.text = dataController.tongCuoc.ToString();
 
@@ -61,7 +78,7 @@ public class Cua : MonoBehaviour
 
     public void Cuoc()
     {
-        if (dataController.tongCuoc <= dataController.tongTien)
+        if (dataController.TienCuoc <= dataController.tongTien)
         {
             this.TienCuoc += dataController.TienCuoc;
             this.TienUI.text = this.TienCuoc.ToString();
@@ -75,6 +92,7 @@ public class Cua : MonoBehaviour
         }
         else
         {
+
             Debug.Log("Bạn không đủ tiền để cược!");
 
         }

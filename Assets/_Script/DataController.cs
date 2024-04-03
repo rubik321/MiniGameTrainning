@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 [System.Serializable]
 
 
@@ -17,6 +18,10 @@ public class DataController : MonoBehaviour
 {
 
     public ComputerUi computerUi;
+
+    public TextMeshProUGUI thangthuatxt;
+
+
 
     public int tongTrungThuong;
     public TextMeshProUGUI tongTrungThuongtxt;
@@ -54,6 +59,8 @@ public class DataController : MonoBehaviour
     [ContextMenu("ShowKetQua")]
     public void ShowKetQua()
     {
+        bool isWin = false;
+
         for (int i = 0; i < 3; i++)
         {
             Cua cua = this.Cuas[UnityEngine.Random.Range(0, this.Cuas.Count)];
@@ -61,6 +68,8 @@ public class DataController : MonoBehaviour
             if (cua.TienCuoc > 0)
             {
                 cua.TienThang += cua.TienCuoc;
+                cua.isWin = true;
+                isWin = true;
             }
             this.computerUi.iconEnimal[i].sprite = lsSpriteIcon[(int)cua.Type].EnimalImg;
         }
@@ -71,19 +80,38 @@ public class DataController : MonoBehaviour
             {
                 tongTien += Cuas[j].TienThang;
                 tongTien += Cuas[j].TienCuoc;
+
             }
-            // for (this.Cuas[i] = TienThang > 0)
-            // {
-            //     tongTien += Cuas[i].TienThang;
-            // }
+            if (Cuas[j].isWin)
+            {
+                Cuas[j].TienThangtxt.text = (Cuas[j].TienThang + Cuas[j].TienCuoc).ToString();
+                Cuas[j].TienThangtxt.gameObject.SetActive(true);
+
+            }
+            else
+            {
+
+                Cuas[j].TienThangtxt.gameObject.SetActive(false);
+
+            }
 
             Cuas[j].ResetCuoc();
 
         }
 
-
         tongCuoc = 0;
         this.UpdateText();
+
+        thangthuatxt.gameObject.SetActive(true);
+
+        if (isWin)
+        {
+            thangthuatxt.text = "You Win";
+        }
+        else
+        {
+            thangthuatxt.text = "You Lose";
+        }
     }
 
     public void ChonTienCuoc(int tien)
@@ -101,6 +129,7 @@ public class DataController : MonoBehaviour
 
         tongSoTienNguoiChoiCoTxt.text = this.tongTien.ToString();
         tongSoTienCuocTxt.text = tongCuoc + "";
+        thangthuatxt.gameObject.SetActive(false);
     }
 
 
